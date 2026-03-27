@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilt Bites</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav class="top-nav navbar navbar-expand-lg py-2">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="logo" class="logo me-2" style="height:45px;">
+                <strong>Guilt Bites</strong>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <form class="d-flex mx-auto my-2 my-lg-0 w-50 w-md-50 w-lg-25">
+                    <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center flex-nowrap">
+                    {% if request.session.user_id %}
+                    <li class="nav-item me-2">
+                        <a href="/orders" class="btn btn-outline-success btn-sm text-nowrap">My Orders</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/log_out" class="btn btn-outline-primary btn-sm text-nowrap">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item me-2">
+                        <a href="/log_in" class="btn btn-outline-primary btn-sm text-nowrap">Log In</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/register" class="btn btn-outline-success btn-sm text-nowrap">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about_us">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact_us">Contact Us</a>
+                    </li>
+                    {% if request.session.is_admin %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/orders">Manage Orders</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/categories">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="d-flex align-items-center justify-content-center gap-3">
+            <img src="{% static 'images/logo.png' %}" alt="Guilt Bites logo" class="logo">
+            <h2>Guilt Bites</h2>
+        </div>
+    </div>
+
+    <div class="container my-5">
+
+        <div class="row align-items-center">
+            <div class="col-md-6 col-sm-12 mb-4 mb-md-0">
+                <div class="text-center mb-4">
+                    <h2 calss="section-title">About Us</h2>
+                </div>
+                <p class="text-center">Welcome to <strong>Guilt Bites</strong>! We create handcrafted treats made with love and quality
+                    ingredients.</p>
+                <p class="text-center">It all started with a simple love for desserts…
+                    I've always enjoyed baking and experimenting with cookie recipes, trying to achieve that authentic,
+                    perfect taste in every bite.
+
+                    As my passion grew, I decided to learn more and took a course where I built a strong foundation.
+                    From
+                    there, I began creating and experimenting with unique flavors—not very common, but truly special in
+                    their own way.
+
+                    With time, the idea grew even bigger…
+                    So many people had been asking for my mom's homemade Ka'ak and Maamoul, and that's when we decided
+                    to add it to
+                    the menu—because honestly, its taste speaks for itself ❤️
+
+                    That's how Guilt Bites became a blend of passion, creativity, and a warm homemade touch in every
+                    detail.
+                </p>
+            </div>
+            <div class="col-md-6 col-sm-12 text-center">
+                <img src="{% static 'images/about_us.jpg' %}" alt="About us product photo"
+                    class="img-fluid rounded shadow">
+            </div>
+        </div>
+
+        <h5 class="text-center my-5">Our Specialities</h5>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-md-3">
+                <div class="card h-100 text-center shadow-sm">
+                    <img src="/static/images/cookies.jpg" class="card-img-top" alt="Cookies">
+                    <div class="card-body">
+                        <h6 class="card-title">Cookies</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="card h-100 text-center shadow-sm">
+                    <img src="/static/images/mini.jpg" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h6 class="card-title">Mini Cookies Box</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="card h-100 text-center shadow-sm">
+                    <img src="/static/images/kaak.jpg" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h6 class="card-title">Ka'ak</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="card h-100 text-center shadow-sm">
+                    <img src="/static/images/maamoul.jpg" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h6 class="card-title">Maamoul</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center my-5">
+            <div
+                class="col-md-8 col-sm-12 d-flex flex-column justify-content-center align-items-center text-center text-md-start px-3">
+                <h2 class="fw-bold fs-4 mb-3">✨ Customized Occasion Box ✨</h2>
+                <p class="mb-5 text-center custom-text">
+                    Create a personalized box of sweets for birthdays, graduations, or special events.
+                    Add names, dates, and special notes to make every gift truly unique and memorable.
+                </p>
+                <h5 class="fw-semibold mb-2">Quality & Tradition</h5>
+                <p class="text-center custom-text">
+                    We blend tradition with modern flavors to deliver premium sweets for every occasion.
+                </p>
+            </div>
+
+            <div class="col-md-4 col-sm-12 text-center px-3">
+                <img src="/static/images/customized_box.jpg" alt="Customized Occasion Box"
+                    class="img-fluid rounded shadow custom-image">
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bg-dark text-light pt-4">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p>Email: <a href="mailto:guilt.bites@gmail.com" class="text-light">guilt.bites@gmail.com</a></p>
+                    <p>Phone: +972 59-408-3433</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <a href="https://www.instagram.com/guiltbites?igsh=MTdvMnN0ZzEyOTdocg%3D%3D&utm_source=qr"
+                        target="_blank" class="text-light me-2"><i class="bi bi-instagram"></i> Guilt Bites</a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Guilt Bites</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Home</a></li>
+                        <li><a href="/shop/categories" class="text-light">Shop</a></li>
+                        <li><a href="/about_us" class="text-light">About Us</a></li>
+                        <li><a href="/contact_us" class="text-light">Contact Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="text-center py-3 border-top border-secondary mt-3">
+                © 2026 Guilt Bites. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

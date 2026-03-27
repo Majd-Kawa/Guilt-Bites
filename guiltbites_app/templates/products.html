@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilt Bites</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav class="top-nav navbar navbar-expand-lg py-2">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="logo" class="logo me-2" style="height:45px;">
+                <strong>Guilt Bites</strong>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <form class="d-flex mx-auto my-2 my-lg-0 w-50 w-md-50 w-lg-25">
+                    <input class="form-control me-2" type="text" id="product-search" placeholder="Search..."
+                        aria-label="Search">
+                </form>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center flex-nowrap">
+                    {% if request.session.user_id %}
+                    <li class="nav-item me-2">
+                        <a href="/orders" class="btn btn-outline-success btn-sm text-nowrap">My Orders</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/log_out" class="btn btn-outline-primary btn-sm text-nowrap">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item me-2">
+                        <a href="/log_in" class="btn btn-outline-primary btn-sm text-nowrap">Log In</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/register" class="btn btn-outline-success btn-sm text-nowrap">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about_us">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact_us">Contact Us</a>
+                    </li>
+                    {% if request.session.is_admin %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/orders">Manage Orders</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/categories">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-10">
+                <img src="{% static 'images/login-register.jpg' %}" class="img-fluid w-100 rounded">
+            </div>
+        </div>
+        <div class="container my-5">
+            <div class="d-flex align-items-center justify-content-center gap-3">
+                <img src="{% static 'images/logo.png' %}" alt="Guilt Bites logo" class="logo">
+                <h2>Guilt Bites</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-3">
+        <a href="/shop/categories" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Back to
+            Categories</a>
+    </div>
+
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">{{ category.name }} Products</h2>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        {% if request.session.is_admin %}
+        <div class="card p-4 mb-4 shadow">
+            <h4>Add New Product</h4>
+            <form action="/dashboard/add_product" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" value="{{ category.id }}">
+                <input type="text" name="name" class="form-control mb-2" placeholder="Product Name">
+                <input type="number" name="price" class="form-control mb-2" placeholder="Product Price">
+                <textarea name="description" class="form-control mb-2" placeholder="Description"></textarea>
+                <input type="file" name="image" class="form-control mb-2">
+                <button class="btn btn-success">Add Product</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if category.name == "Customized Occasion Box" %}
+        <h4>Create Your Custom Occasion Box</h4>
+        <form method="POST" action="/cart/add/custom_box">
+            {% csrf_token %}
+            <input type="hidden" name="custom_box_product_id" value="{{ custom_box_product.id }}">
+            <div class="mb-3">
+                <label class="form-label">Name for Occasion</label>
+                <input type="text" name="custom_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Event Date</label>
+                <input type="date" name="event_date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Design Details</label>
+                <textarea name="design_details" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Special Notes</label>
+                <textarea name="notes" class="form-control" rows="2"></textarea>
+            </div>
+
+            <h5>Select Products for Your Box</h5>
+            <div class="row" id="product-list">
+                {% for box_product in products %}
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ box_product.image.url }}" class="card-img-top" alt="{{ box_product.name }}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">{{ box_product.name }}</h6>
+                            <p class="card-text">{{ box_product.description }}</p>
+                            <p class="fw-bold">{{ box_product.price }} ₪</p>
+                            <div class="mb-2">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" name="product_{{ box_product.id }}" class="form-control" min="0"
+                                    value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary w-50 my-5">Add Custom Box to Cart</button>
+            </div>
+        </form>
+        {% else %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-12 col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="fw-bold">{{ product.price }} ₪</p>
+                        <a href="/shop/product_details/{{ product.id }}" class="btn btn-outline-primary w-100 mb-2">View
+                            Details</a>
+                        <a href="/cart/add/{{ product.id }}" class="btn btn-dark w-100 mb-2">Add to Cart</a>
+                        {% if request.session.is_admin %}
+                        <form action="/dashboard/delete_product/{{ product.id }}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="category_id" value="{{ category.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
+                        </form>
+                        <button class="btn btn-warning btn-sm w-100 mt-2" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#editForm{{ product.id }}">
+                            Edit
+                        </button>
+                        <div class="collapse mt-2" id="editForm{{ product.id }}">
+                            <form action="/dashboard/edit_product/{{ product.id }}" method="POST"
+                                enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="text" name="name" class="form-control mb-1" value="{{ product.name }}"
+                                    required>
+                                <textarea name="description" class="form-control mb-1" rows="3"
+                                    required>{{ product.description }}</textarea>
+                                <input type="number" name="price" class="form-control mb-1" value="{{ product.price }}"
+                                    required>
+                                <input type="file" name="image" class="form-control mb-1">
+                                <input type="hidden" name="category_id" value="{{ category.id }}">
+                                <button type="submit" class="btn btn-success btn-sm w-100">Update</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No products found in this category.</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="bg-dark text-light pt-4">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p>Email: <a href="mailto:guilt.bites@gmail.com" class="text-light">guilt.bites@gmail.com</a>
+                    </p>
+                    <p>Phone: +972 59-408-3433</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <a href="https://www.instagram.com/guiltbites?igsh=MTdvMnN0ZzEyOTdocg%3D%3D&utm_source=qr"
+                        target="_blank" class="text-light me-2"><i class="bi bi-instagram"></i> Guilt Bites</a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Guilt Bites</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Home</a></li>
+                        <li><a href="/shop/categories" class="text-light">Shop</a></li>
+                        <li><a href="/about_us" class="text-light">About Us</a></li>
+                        <li><a href="/contact_us" class="text-light">Contact Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="text-center py-3 border-top border-secondary mt-3">
+                © 2026 Guilt Bites. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    var csrfToken = '{{ csrf_token }}';
+    <script>
+        $(document).ready(function () {
+
+            $('#product-search').on('keyup', function () {
+                let query = $(this).val();
+
+                $.ajax({
+                    url: '{% url "search_products" %}',
+                    data: { 'q': query },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#product-list').empty();
+
+                        if (data.products.length === 0) {
+                            $('#product-list').html('<p class="text-center">No products found.</p>');
+                        } else {
+                            data.products.forEach(function (product) {
+                                let product_html = `
+                        <div class="col-12 col-md-4 mb-3 product-item">
+                            <div class="card h-100 shadow-sm">
+                                <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description}</p>
+                                    <p class="fw-bold">${product.price} ₪</p>
+                                    <button class="btn btn-dark w-100 mb-2 add-to-cart-btn" data-id="${product.id}">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                                $('#product-list').append(product_html);
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.add-to-cart-btn', function (e) {
+                e.preventDefault();
+                let productId = $(this).data('id');
+
+                $.ajax({
+                    url: '/cart/add_ajax/' + productId + '/',
+                    type: 'POST',
+                    headers: { 'X-CSRFToken': csrfToken },
+                    success: function (data) {
+                        if (data.success) {
+                            alert('Product added! Total items: ' + data.total_items);
+                        } else {
+                            alert('Error adding product.');
+                        }
+                    },
+                    error: function () {
+                        alert('Something went wrong.');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guilt Bites</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav class="top-nav navbar navbar-expand-lg py-2">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="logo" class="logo me-2" style="height:45px;">
+                <strong>Guilt Bites</strong>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <form class="d-flex mx-auto my-2 my-lg-0 w-50 w-md-50 w-lg-25">
+                    <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center flex-nowrap">
+                    {% if request.session.user_id %}
+                    <li class="nav-item me-2">
+                        <a href="/orders" class="btn btn-outline-success btn-sm text-nowrap">My Orders</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/log_out" class="btn btn-outline-primary btn-sm text-nowrap">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item me-2">
+                        <a href="/log_in" class="btn btn-outline-primary btn-sm text-nowrap">Log In</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a href="/register" class="btn btn-outline-success btn-sm text-nowrap">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/cart" class="btn btn-outline-secondary btn-sm text-nowrap">
+                            <i class="bi bi-cart"></i> Cart
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about_us">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact_us">Contact Us</a>
+                    </li>
+                    {% if request.session.is_admin %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/orders">Manage Orders</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/shop/categories">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="container my-5">
+            <div class="d-flex align-items-center justify-content-center gap-3">
+                <img src="{% static 'images/logo.png' %}" alt="Guilt Bites logo" class="logo">
+                <h2>Guilt Bites</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-3">
+        <a href="/shop/categories" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Back to
+            Categories</a>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Shopping Cart</h2>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        {% if items %}
+        <div class="row">
+            <div class="col-md-8">
+
+                {% for item in items %}
+                <div class="card mb-3 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if item.details %}
+                            <img src="{% static 'images/customized_box.jpg' %}" class="img-fluid rounded-start"
+                                alt="Custom Box">
+                            {% else %}
+                            <img src="{{ item.product.image.url }}" class="img-fluid rounded-start"
+                                alt="{{ item.product.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                {% if item.details %}
+                                <h5 class="card-title">Custom Occasion Box</h5>
+                                <p><strong>Custom Name:</strong> {{ item.details.custom_name }}</p>
+                                <p><strong>Event Date:</strong> {{ item.details.event_date }}</p>
+                                <p><strong>Design Details:</strong> {{ item.details.design_details }}</p>
+                                <p><strong>Notes:</strong> {{ item.details.notes }}</p>
+                                <p><strong>Products in Box:</strong></p>
+                                <ul>
+                                    {% for selected in item.details.selected_items %}
+                                    <li>{{ selected.name }} x {{ selected.quantity }}</li>
+                                    {% endfor %}
+                                </ul>
+                                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                                <p><strong>Subtotal:</strong> {{ item.subtotal }} ₪</p>
+                                {% else %}
+                                <h5 class="card-title">{{ item.product.name }}</h5>
+                                <p>{{ item.product.price }} ₪ per unit</p>
+
+                                <form method="POST" action="/cart/edit">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                    <div class="input-group mb-3 w-50">
+                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                                            class="form-control">
+                                        <button class="btn btn-outline-secondary" type="submit">Update</button>
+                                    </div>
+                                </form>
+
+                                <a href="/cart/remove/{{ item.product.id }}" class="btn btn-danger btn-sm">Remove</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <h5 class="card-title">Cart Summary</h5>
+                    <p>Total Items: {{ items|length }}</p>
+                    <h6>Total Price: {{ total }} ₪</h6>
+                    <a href="/checkout" class="btn btn-success w-100 mt-3">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <div class="text-center mt-5">
+            <p>Your cart is empty.</p>
+            <a href="/shop/categories" class="btn btn-primary my-4">Start Shopping</a>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <footer class="bg-dark text-light pt-4">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <p>Email: <a href="mailto:guilt.bites@gmail.com" class="text-light">guilt.bites@gmail.com</a></p>
+                    <p>Phone: +972 59-408-3433</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <a href="https://www.instagram.com/guiltbites?igsh=MTdvMnN0ZzEyOTdocg%3D%3D&utm_source=qr"
+                        target="_blank" class="text-light me-2"><i class="bi bi-instagram"></i> Guilt Bites</a>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5>Guilt Bites</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light">Home</a></li>
+                        <li><a href="/shop/categories" class="text-light">Shop</a></li>
+                        <li><a href="/about_us" class="text-light">About Us</a></li>
+                        <li><a href="/contact_us" class="text-light">Contact Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="text-center py-3 border-top border-secondary mt-3">
+                © 2026 Guilt Bites. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
