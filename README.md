@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Guilt-Bites</title>
 </head>
 <body>
 
@@ -28,7 +27,6 @@
     <li>🎁 <strong>Custom Occasion Box:</strong> Personalize orders with names, dates, and design details</li>
     <li>🛒 <strong>Shopping Cart & Orders:</strong> Add items, update quantities, and place orders</li>
     <li>🧑‍💼 <strong>Admin Dashboard:</strong> Manage products, categories, and customer orders</li>
-    <li>🔍 <strong>Search & Category Filtering</strong></li>
     <li>📱 <strong>Responsive Design:</strong> Mobile, tablet, desktop</li>
     <li>⚡ <strong>AJAX Integration:</strong> Dynamic page updates without reloads</li>
     <li>🗄️ <strong>Database:</strong> MySQL for structured and secure data storage</li>
@@ -92,7 +90,6 @@
 <ul>
     <li>User registration and authentication</li>
     <li>Product & category management (CRUD)</li>
-    <li>Product browsing with search and filtering</li>
     <li>Shopping cart with quantity updates</li>
     <li>Order creation and tracking</li>
     <li>Support for custom and seasonal orders</li>
@@ -118,15 +115,6 @@
     <li>Category</li>
     <li>Product</li>
     <li>Orders</li>
-</ul>
-<p><em>Insert ERD image here if available</em></p>
-
-<hr>
-
-<h2>🔗 Links</h2>
-<ul>
-    <li>GitHub Repo: <a href="#">Add link here</a></li>
-    <li>Trello Board: <a href="#">Add link here</a></li>
 </ul>
 
 <hr>
