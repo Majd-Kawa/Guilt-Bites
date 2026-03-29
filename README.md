@@ -92,7 +92,7 @@
     <li>Product & category management (CRUD)</li>
     <li>Shopping cart with quantity updates</li>
     <li>Order creation and tracking</li>
-    <li>Support for custom and seasonal orders</li>
+    <li>Support for custom and orders</li>
 </ul>
 
 <h3>🛠️ Technical Requirements</h3>
@@ -132,9 +132,9 @@
 <h2>🚀 Future Improvements</h2>
 <ul>
     <li>Online payment integration</li>
-    <li>Order tracking system</li>
     <li>User reviews & ratings</li>
     <li>Wishlist feature</li>
+    <li>Related items feature</li>
 </ul>
 
 </body>
