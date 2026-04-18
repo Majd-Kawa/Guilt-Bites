@@ -118,17 +118,6 @@
 </ul>
 
 <hr>
-<h3>🛠️ Technical Requirements</h3>
-<ul>
-    <li><strong>Frontend:</strong> HTML, CSS (Bootstrap)</li>
-    <li><strong>Backend:</strong> Django (Python)</li>
-    <li><strong>Database:</strong> MySQL for structured data</li>
-    <li><strong>AJAX:</strong> Dynamic updates without full reload</li>
-    <li><strong>API Integration:</strong> Email API for order confirmations</li>
-    <li><strong>Security:</strong> Password hashing, CSRF protection, input validation</li>
-    <li><strong>Architecture:</strong> Scalable and modular design</li>
-</ul>
-<hr>
 <h2>🚀 Future Improvements</h2>
 <ul>
     <li>Online payment integration</li>
