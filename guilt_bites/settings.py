@@ -44,15 +44,13 @@ INSTALLED_APPS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'  
-EMAIL_HOST_USER = 'majd kawa' 
-EMAIL_HOST_PASSWORD = '123456adminZ!F'  
-EMAIL_PORT = 2525 
-EMAIL_USE_TLS = True  
-
-DEFAULT_FROM_EMAIL = 'noreply@guiltbites.com'  
-SERVER_EMAIL = 'errors@guiltbites.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'majdkawwaa@gmail.com'
+EMAIL_HOST_PASSWORD = 'biduxqatnwkerimo'  
+DEFAULT_FROM_EMAIL = 'Guilt Bites <majdkawwaa@gmail.com>'
+CONTACT_EMAIL = 'majdkawwaa@gmail.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

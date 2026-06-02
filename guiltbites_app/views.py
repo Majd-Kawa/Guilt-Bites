@@ -3,6 +3,8 @@ from .models import *
 from django.contrib import messages
 from .utils.email_utils import send_order_confirmation, send_welcome_email
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def is_admin(request):
@@ -25,7 +27,45 @@ def about_us(request):
     return render (request , 'about_us.html')
 
 def contact_us(request):
-    return render (request , 'contact_us.html')
+        if request.method == 'POST':
+            data = {
+                'name': request.POST.get('name', ''),
+                'email': request.POST.get('email', ''),
+                'message': request.POST.get('message', ''),
+            }
+            
+            errors = ContactMessage.objects.validate_message(data)
+            
+            if errors:
+                context = {
+                    'errors': errors,
+                    'name': data['name'],
+                    'email': data['email'],
+                    'message': data['message'],
+                }
+                return render(request, 'contact_us.html', context)
+            
+            ContactMessage.objects.create_message(data)
+            
+            send_mail(
+                subject=f"New Contact Message from {data['name']}",
+                message=f"""You received a new message from your Guilt Bites contact form:
+
+    Name: {data['name']}
+    Email: {data['email']}
+
+    Message:
+    {data['message']}
+    """,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=True,  
+            )
+            
+            messages.success(request, "Thank you! Your message has been saved.")
+            return redirect('contact_us')
+
+        return render (request , 'contact_us.html')
 
 def shop_categories(request):
     categories = Category.objects.all()
