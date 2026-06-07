@@ -124,6 +124,7 @@
     <li>User reviews & ratings</li>
     <li>Wishlist feature</li>
     <li>Related items feature</li>
+    <li>Speacial occasion sale feature</li>
 </ul>
 
 </body>
