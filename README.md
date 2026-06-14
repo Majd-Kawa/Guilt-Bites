@@ -84,6 +84,11 @@
 
 <hr>
 
+## 📸 Screenshots
+### Home Page Interface
+
+<hr>
+
 <h2>📋 Project Requirements</h2>
 
 <h3>✅ Functional Requirements</h3>
