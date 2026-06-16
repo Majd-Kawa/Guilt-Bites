@@ -89,7 +89,7 @@
 
 | Home Page | About us | Contact us |
 |-----------|------------|-------------|
-| ![Home Page](Screenshots/home_page.png) | ![About us](Screenshots/about_us.png) | ![Contact us](Screenshots/contact_us.png) |
+| ![Home Page](screenshots/home_page.png) | ![About us](screenshots/about_us.png) | ![Contact us](screenshots/contact_us.png) |
 <hr>
 
 <h2>📋 Project Requirements</h2>
