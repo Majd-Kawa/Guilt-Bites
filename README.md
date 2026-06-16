@@ -86,15 +86,10 @@
 
 ## 📸 Screenshots
 ## Public pages
-### Home Page Interface
-![Home Page interface](screenshots/home_page.png)
 
-### About us Interface
-![About us interface](screenshots/about_us.png)
-
-### Contact us Interface
-![Contact us interface](screenshots/contact_us.png)
-
+| Home Page | About us | Contact us |
+|-----------|------------|-------------|
+| ![Home Page](Screenshots/home_page.png) | ![About us](Screenshots/about_us.png) | ![Contact us](Screenshots/contact_us.png) |
 <hr>
 
 <h2>📋 Project Requirements</h2>
