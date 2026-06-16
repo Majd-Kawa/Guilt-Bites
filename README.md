@@ -85,6 +85,7 @@
 <hr>
 
 ## 📸 Screenshots
+## Public pages
 ### Home Page Interface
 
 <hr>
