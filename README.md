@@ -87,6 +87,13 @@
 ## 📸 Screenshots
 ## Public pages
 ### Home Page Interface
+![Home Page interface](screenshots/home_page.png)
+
+### About us Interface
+![About us interface](screenshots/about_us.png)
+
+### Contact us Interface
+![Contact us interface](screenshots/contact_us.png)
 
 <hr>
 
