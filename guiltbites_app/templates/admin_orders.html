@@ -120,11 +120,31 @@
                     <td>#{{ order.id }}</td>
                     <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
                     <td>
-                        <ul class="mb-0">
+                        <!-- <ul class="mb-0">
                             {% for item in order.items.all %}
                             <li>{{ item.product.name }} x {{ item.quantity }}</li>
                             {% endfor %}
-                        </ul>
+                        </ul> -->
+                        {% for item in order.items.all %}
+                            {% if item.details.is_custom_box %}
+                                {{ item.product.name }}
+                                <ul class="mb-0">
+                                    <li><strong>Custom Name:</strong> {{ item.details.custom_name }}</li>
+                                    <li><strong>Event Date:</strong> {{ item.details.event_date }}</li>
+                                    <li><strong>Design Details:</strong> {{ item.details.design_details }}</li>
+                                    <li><strong>Notes:</strong> {{ item.details.notes }}</li>
+                                    <li><strong>Products:</strong>
+                                        <ul>
+                                            {% for selected in item.details.selected_items %}
+                                                <li>{{ selected.name }} x {{ selected.quantity }} </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            {% else %}
+                                {{ item.product.name }}
+                            {% endif %}
+                        {% endfor %}
                     </td>
                     <td>{{ order.total_price }} ₪</td>
                     <td>
