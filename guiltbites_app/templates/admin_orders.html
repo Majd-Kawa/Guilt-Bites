@@ -120,11 +120,6 @@
                     <td>#{{ order.id }}</td>
                     <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
                     <td>
-                        <!-- <ul class="mb-0">
-                            {% for item in order.items.all %}
-                            <li>{{ item.product.name }} x {{ item.quantity }}</li>
-                            {% endfor %}
-                        </ul> -->
                         {% for item in order.items.all %}
                             {% if item.details.is_custom_box %}
                                 {{ item.product.name }}
