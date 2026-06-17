@@ -478,6 +478,8 @@ class OrderItem(models.Model):
     objects = OrderItemManager()
 
     def subtotal(self):
+        if self.details and self.details.get('is_custom_box'):
+            return self.price
         return self.price * self.quantity
 
     def __str__(self):

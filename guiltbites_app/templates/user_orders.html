@@ -172,7 +172,13 @@
                                             {% endif %}
                                         </td>
                                         <td class="w-15 text-center">{{ item.price }}</td>
-                                        <td class="w-10 text-center">{{ item.quantity }}</td>
+                                        <td class="w-10 text-center">
+                                            {% if item.details.is_custom_box %}
+                                                1
+                                            {% else %}
+                                                {{ item.quantity }}
+                                            {% endif %}
+                                        </td>
                                         <td class="w-15 text-center">{{ item.subtotal }} ₪</td>
                                         <td class="w-10 text-center">
                                             {% if item.details.is_custom_box %}

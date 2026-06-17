@@ -5,6 +5,7 @@ from .utils.email_utils import send_order_confirmation, send_welcome_email
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
+from decimal import Decimal
 
 # Create your views here.
 def is_admin(request):
@@ -296,15 +297,16 @@ def checkout(request):
             
             total_qty = sum(item["quantity"] for item in selected_products)
             
-            subtotal = 0
-            total_qty = 0
+            subtotal = Decimal('0.00')
             selected_items_details = []
+
             for item in selected_products:
                 sp = Product.objects.get(id=item["id"])
-                qty = item["quantity"]
+                qty = int(item["quantity"])
+
                 item_total = sp.price * qty
                 subtotal += item_total
-                total_qty += qty
+
                 selected_items_details.append({
                     'name': sp.name,
                     'quantity': qty,
@@ -312,13 +314,11 @@ def checkout(request):
                     'total': str(item_total)
                 })
 
-            unit_price = subtotal / total_qty if total_qty > 0 else 0
-
             OrderItem.objects.create(
                 order=order,
                 product=custom_box_product,
-                quantity=total_qty,
-                price=unit_price,  # Store 50, not 550
+                quantity=1,                 
+                price=subtotal,             
                 details={
                     'is_custom_box': True,
                     'custom_name': value.get('custom_name', ''),
@@ -330,7 +330,6 @@ def checkout(request):
             )
 
             total_price += subtotal
-
         else:
             product = Product.objects.get(id=product_id)
             quantity = int(value)
